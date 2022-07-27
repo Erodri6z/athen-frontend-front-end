@@ -15,7 +15,7 @@ import * as noteService from './services/noteService'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
-  const [note, setJournalNote] = useState({})
+  const [notes, setNotes] = useState([])
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -29,8 +29,8 @@ const App = () => {
   }
 
   const handleAddNote =  async (newNoteData) => {
-    const newNote= await noteService.create(newNoteData)
-    setJournalNote([...note, newNote])
+    const newNote = await noteService.create(newNoteData)
+    setNotes([...notes, newNote])
     navigate('/')
   }
 
@@ -58,7 +58,7 @@ const App = () => {
         <Route
           path="/journal-entry"
           element={ <JournalNote 
-          handleAddEntry={handleAddNote}
+          handleAddNote={handleAddNote}
           />}
         />
         <Route

@@ -1,19 +1,35 @@
-import { Link } from "react-router-dom"
 
-const Journal = () => {
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import { getAll } from "../../services/noteService"
+
+
+
+const Journal = (props) => {
+  const [notes, setJournalNotes] = useState({})
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      const notesData = await getAll()
+      setJournalNotes(notesData.results)
+    }
+    fetchNotes()
+  }, [])
+
+
   return(
-    <>
-    <Link to="/journal-entry">
-      <button>New Log?</button>
-    </Link>
-    <h2>hello this is a certified</h2>
-    <div>
-      <h2>title</h2>
-      <div>
-        <p>this is a placeholder for the people will say once this thing is up and running</p>
-      </div>
-    </div>
-    </>
+    <><>
+      <Link to="/journal-entry">
+        <button>New Log?</button>
+      </Link>
+    </><>
+        <div>
+          {notes.map(note => <h3>{props.note.title}</h3>
+          )}
+
+        </div>
+      </></>
+      
   )
 }
 
