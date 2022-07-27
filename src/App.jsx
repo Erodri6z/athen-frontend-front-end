@@ -8,10 +8,14 @@ import Profiles from './pages/Profiles/Profiles'
 import Journal from './components/Journal/Journal'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
-import JournalEntry from './Journal-Form/Journal-Entry'
+import JournalNote from './Journal-Form/Journal-Note'
+import * as noteService from './services/noteService'
+
+
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
+  const [note, setJournalNote] = useState({})
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -22,6 +26,12 @@ const App = () => {
 
   const handleSignupOrLogin = () => {
     setUser(authService.getUser())
+  }
+
+  const handleAddNote =  async (newNoteData) => {
+    const newNote= await noteService.create(newNoteData)
+    setJournalNote([...note, newNote])
+    navigate('/')
   }
 
   return (
@@ -47,7 +57,9 @@ const App = () => {
         />
         <Route
           path="/journal-entry"
-          element={ <JournalEntry />}
+          element={ <JournalNote 
+          handleAddEntry={handleAddNote}
+          />}
         />
         <Route
           path="/changePassword"
