@@ -20,8 +20,19 @@ async function getAll() {
   return await res.json()
 }
 
+async function deleteNote(noteId) {
+  const res = await fetch(`${BASE_URL}/${noteId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${tokenService.getToken()}`,
+    },
+  })
+  return await res.json()
+}
+
 
 export {
   create,
-  getAll
+  getAll,
+  deleteNote
 }

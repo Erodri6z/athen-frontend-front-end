@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
@@ -23,9 +23,23 @@ const App = () => {
     setUser(null)
     navigate('/')
   }
+  useEffect(() => {
+    const fetchAllNotes = async () => {
+      const notesData = await noteService.getAll()
+      setNotes(notesData)
+    }
+    fetchAllNotes()
+  }, [])
 
   const handleSignupOrLogin = () => {
     setUser(authService.getUser())
+  }
+
+  const handleDeleteNote = async noteId => {
+    const deletedNote = await noteService.deleteNote(noteId)
+    const newNoteArray = notes.filter(note => note._id !== deletedNote._id)
+    setNotes(newNoteArray)
+    navigate('/journal')
   }
 
   const handleAddNote =  async (newNoteData) => {
@@ -53,7 +67,11 @@ const App = () => {
         />
         <Route
           path="/journal"
-          element={ <Journal />}
+          element={ <Journal 
+            user={user} 
+            notes={notes}
+            handleDeleteNote={handleDeleteNote}
+          />}
         />
         <Route
           path="/journal-entry"
