@@ -30,9 +30,24 @@ async function deleteNote(noteId) {
   return await res.json()
 }
 
+async function update(noteData) {
+  const res = await fetch(`${BASE_URL}/${noteData._id}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${tokenService.getToken()}`,
+      'Content-Type' : 'application/json'
+    },
+    body: JSON.stringify(noteData)
+  })
+  return await res.json()
+}
+
+
+
 
 export {
   create,
   getAll,
-  deleteNote
+  deleteNote,
+  update
 }

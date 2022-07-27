@@ -30,7 +30,10 @@ const Journal = (props) => {
             <p>{note.text}</p>
             {props.user?.profile === note.author._id &&
             <><button onClick={() => props.handleDeleteNote(note._id)}>Delete</button>
-            <button>Edit</button></>
+            <Link to="/edit" state={{note}}>
+              Edit
+            </Link>
+            </>
             }
 
           </div>

@@ -6,6 +6,7 @@ import Login from './pages/Login/Login'
 import Landing from './pages/Landing/Landing'
 import Profiles from './pages/Profiles/Profiles'
 import Journal from './components/Journal/Journal'
+import EditNote from './components/Edit-Note/Edit-Note'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
 import JournalNote from './Journal-Form/Journal-Note'
@@ -45,7 +46,15 @@ const App = () => {
   const handleAddNote =  async (newNoteData) => {
     const newNote = await noteService.create(newNoteData)
     setNotes([...notes, newNote])
-    navigate('/')
+    navigate('/journal')
+  }
+
+  const handleUpdateNote = async (noteData) => {
+    const updatedNote = await noteService.update(noteData)
+    const newNoteArray = notes.map(note => note._id === updatedNote._id ?
+      updatedNote : note)
+    setNotes(newNoteArray)
+    navigate('/journal')
   }
 
   return (
@@ -77,6 +86,12 @@ const App = () => {
           path="/journal-entry"
           element={ <JournalNote 
           handleAddNote={handleAddNote}
+          />}
+        />
+        <Route
+          path="/edit"
+          element={ <EditNote 
+          handleUpdateNote={handleUpdateNote}
           />}
         />
         <Route

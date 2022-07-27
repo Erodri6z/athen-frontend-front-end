@@ -1,15 +1,12 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useState, useRef,useEffect } from "react"
-import { create } from "../services/noteService"
 import { Link } from "react-router-dom"
 
 
-const CreateNote = (props) => {
+const EditNote = (props) => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    title: '',
-    text: ''
-  })
+  const location = useLocation()
+  const [formData, setFormData] = useState(location.state.note)
 
   const handleChange = (e) => {
     setFormData({...formData,
@@ -20,7 +17,7 @@ const CreateNote = (props) => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      props.handleAddNote(formData)
+      props.handleUpdateNote(formData)
       navigate('/journal')
     } catch (err) {
       console.log(err)
@@ -34,13 +31,14 @@ const CreateNote = (props) => {
     <div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <label>
-          <h3>What's on your mind</h3>
+          <h3>Edit</h3>
           <input type="text" name="title" id="j-title" onChange={handleChange} />
           <br />
           <textarea name="text" id="textbox" cols="60" rows="10"  onChange={handleChange} />
+          <br />
         </label>
         <button type="submit">
-          Save
+          Save Change
         </button>
         <Link to="/journal">
           <button>Cancel</button>
@@ -52,4 +50,4 @@ const CreateNote = (props) => {
   )
 }
 
-export default CreateNote
+export default EditNote
