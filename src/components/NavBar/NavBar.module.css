@@ -1,0 +1,15 @@
+ul{
+  list-style: none;
+  text-align: center;
+}
+nav{
+  border: 10px solid black;
+}
+li{
+  display:inline ;
+  margin: 10px;
+}
+
+.navitem{
+  text-decoration: none;
+}

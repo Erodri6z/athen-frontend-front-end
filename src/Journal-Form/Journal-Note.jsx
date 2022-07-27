@@ -42,7 +42,8 @@ const CreateNote = (props) => {
         <button type="submit">
           Save
         </button>
-        <Link to="/journal">
+        <Link to="/journal"
+        >
           <button>Cancel</button>
         </Link>
       </form>

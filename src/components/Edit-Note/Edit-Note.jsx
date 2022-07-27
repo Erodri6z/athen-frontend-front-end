@@ -32,9 +32,9 @@ const EditNote = (props) => {
       <form autoComplete="off" onSubmit={handleSubmit}>
         <label>
           <h3>Edit</h3>
-          <input type="text" name="title" id="j-title" onChange={handleChange} />
+          <input type="text" name="title" value={formData.title} id="j-title" onChange={handleChange} />
           <br />
-          <textarea name="text" id="textbox" cols="60" rows="10"  onChange={handleChange} />
+          <textarea name="text" id="textbox" value={formData.text} cols="60" rows="10"  onChange={handleChange} />
           <br />
         </label>
         <button type="submit">
